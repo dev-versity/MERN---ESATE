@@ -1,21 +1,19 @@
-import express from "express";
-import mongoose from "mongoose";
 import dotenv from "dotenv"
-import userRouter from "./Routes/userRoute";
+import App from "./app"
+// import PlaceController from "./controllers/placeController";
+import UserController from "./controllers/userController";
 dotenv.config()
 
-main().catch((err) => console.log(err));
 
-async function main() {
-  await mongoose.connect(process.env.MONGODB_URI);
-  console.log("Connected to MongoDB");
-}
-const app = express();
+const app = new App(
+  [
+  new UserController(),
+  // new PlaceController()
+],
+  Number(process.env.PORT))
 
-app.use(express.urlencoded({ extended: false }));
 
-app.use("/users", userRouter);
+app.listen()
 
-app.listen(process.env.PORT, () => {
-  console.log(`listening on port ${process.env.PORT}`);
-});
+
+
