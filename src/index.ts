@@ -1,18 +1,18 @@
-import express       from "express"
-import mongoose      from "mongoose"
+import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv"
+dotenv.config()
 
-main().catch(err => console.log(err));
+main().catch((err) => console.log(err));
 
 async function main() {
-  await mongoose.connect('mongodb://127.0.0.1:27017/Estate');
+  await mongoose.connect(process.env.MONGODB_URI);
   console.log("Connected to MongoDB");
 }
-  const app = express()
+const app = express();
 
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({ extended: false }));
 
-
-
-app.listen(4000, () => {
-  console.log("listening on port 4000")
-})
+app.listen(process.env.PORT, () => {
+  console.log(`listening on port ${process.env.PORT}`);
+});
